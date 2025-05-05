@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captcha Bypass Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #captcha-container {
+            background-color: #e6ffe6;  /* Light green background */
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Captcha Bypass Demo</h2>
+    <div id="captcha-container">
+        <label for="captchaInput">Captcha</label>
+        <input type="text" id="captchaInput" name="captchaInput" placeholder="Enter captcha here">
+    </div>
+
+    <button id="loginBtn">Submit</button>
+
+    <script>
+        document.getElementById("loginBtn").addEventListener("click", function() {
+            const captchaToken = document.getElementById("captchaInput").value;
+
+            // Send the captcha input to the server
+            fetch("/verify-captcha", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ captchaToken })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Captcha solved successfully!");
+                } else {
+                    alert("Captcha verification failed.");
+                }
+            })
+            .catch(error => {
+                alert("An error occurred.");
+            });
+        });
+    </script>
+</body>
+</html>

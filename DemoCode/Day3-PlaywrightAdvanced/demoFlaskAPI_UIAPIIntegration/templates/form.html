@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Form</title>
+
+  <script>
+    async function postData() {
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+
+      const response = await fetch('/demo_post_endpoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: name, age: age })
+      });
+
+      const result = await response.json();
+      document.getElementById("postButton").disabled = true;
+      alert(result.message);
+    }
+
+    async function getData() {
+      const response = await fetch('/demo_get_endpoint');
+      const result = await response.json();
+
+      document.getElementById('name').value = result.name;
+      document.getElementById('age').value = result.age;
+    }
+
+    function clearFields() {
+      document.getElementById('name').value = "";
+      document.getElementById('age').value = "";
+    }
+  </script>
+</head>
+<body>
+  <h2>User Form</h2>
+  <label for="name">Name:</label><br>
+  <input type="text" id="name" name="name"><br><br>
+
+  <label for="age">Age:</label><br>
+  <input type="text" id="age" name="age"><br><br>
+
+  <button onclick="postData()">POST</button>
+  <button onclick="getData()">GET</button>
+  <button onclick="clearFields()">CLEAR</button>
+</body>
+</html>
