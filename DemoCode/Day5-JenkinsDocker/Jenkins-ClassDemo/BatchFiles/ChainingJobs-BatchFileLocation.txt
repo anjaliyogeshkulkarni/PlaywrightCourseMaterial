@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Job 1') {
+            steps {
+                script {
+                    bat 'D:\\Anjali\\CourseMaterial\\Playwright\\Demo-Files\\Jenkins-ClassDemo\\BatchFiles\\batchFileJenkins.bat'
+                }
+            }
+        }
+        stage('Job 2') {
+            steps {
+                script {
+                    bat 'D:\\Anjali\\CourseMaterial\\Playwright\\Demo-Files\\Jenkins-ClassDemo\\BatchFiles\\batchFileJenkinsF2.bat'
+                }
+            }
+        }
+        // Add more stages as needed
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+        success {
+            echo 'Pipeline succeeded.'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
