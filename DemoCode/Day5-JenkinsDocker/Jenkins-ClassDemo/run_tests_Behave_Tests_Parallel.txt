@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Run Tests in Parallel') {
+            parallel {
+                stage('UserAuth') {
+                    steps {
+                        script {
+                            build job: 'UserAuth', wait: false
+                        }
+                    }
+                }
+                stage('AddToCart') {
+                    steps {
+                        script {
+                            build job: 'AddToCart', wait: false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
